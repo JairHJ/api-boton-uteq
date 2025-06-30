@@ -15,7 +15,7 @@
     "express": "^5.1.0",
     "haversine-distance": "^1.2.4",
     "mysql2": "^3.14.1",
-    "node-fetch": "^3.3.2",
+    "node-fetch": "^2.7.0",
     "nodemailer": "^7.0.4"
   },
   "description": ""
