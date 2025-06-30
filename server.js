@@ -1,10 +1,11 @@
-// server.js
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2');
 const nodemailer = require('nodemailer');
 const haversine = require('haversine-distance');
 const fetch = require('node-fetch');
+
+require('dotenv').config();  // carga variables de entorno
 
 const app = express();
 app.use(cors());
@@ -13,8 +14,6 @@ app.use(express.json());
 // —————————————
 // 1) Conexión a MySQL
 // —————————————
-require('dotenv').config();       // si no lo usas aún, instala dotenv
-const mysql = require('mysql2');
 const DATABASE_URL = process.env.DATABASE_URL;
 
 let db;
@@ -38,6 +37,7 @@ db.connect(err => {
   }
   console.log('Conectado a MySQL');
 });
+
 // —————————————
 // 2) Configuración de Nodemailer
 // —————————————
@@ -48,6 +48,7 @@ const transporter = nodemailer.createTransport({
     pass: 'tu_app_password'       // ← usa App Password si es Gmail
   }
 });
+
 async function enviarCorreo(destinatario, asunto, texto) {
   const mailOptions = {
     from: 'Botón de Pánico <tucorreo@gmail.com>',
@@ -236,7 +237,7 @@ app.delete('/reportes/:id', (req, res) => {
 // —————————————
 // 8) Iniciar servidor
 // —————————————
-const PORT = 3000;
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Servidor corriendo en http://0.0.0.0:${PORT}`);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
